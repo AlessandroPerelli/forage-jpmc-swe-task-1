@@ -42,7 +42,6 @@ def getDataPoint(quote):
 def getRatio(price_a, price_b):
     """ Get ratio of price_a and price_b """
     """ ------------- Update this function ------------- """
-    print(price_a, price_b)
     return price_a / price_b
 
 
@@ -60,7 +59,7 @@ if __name__ == "__main__":
 
             stock_prices[stock_details[0]] = stock_details[3]
 
-if 'ABC' in stock_prices and 'DEF' in stock_prices:
-    print("Ratio %s" % getRatio(stock_prices['ABC'], stock_prices['DEF']))
-else:
-    print("Missing data for one of the stocks ('ABC' or 'DEF')")
+        if 'ABC' in stock_prices and 'DEF' in stock_prices:
+            print("Ratio %s" % getRatio(stock_prices['ABC'], stock_prices['DEF']))
+        else:
+            print("Missing data for one of the stocks")
