@@ -35,14 +35,15 @@ def getDataPoint(quote):
     stock = quote['stock']
     bid_price = float(quote['top_bid']['price'])
     ask_price = float(quote['top_ask']['price'])
-    price = bid_price
-    return stock, bid_price, ask_price, price
+    price = (ask_price + bid_price) / 2
+    return (stock, bid_price, ask_price, price)
 
 
 def getRatio(price_a, price_b):
     """ Get ratio of price_a and price_b """
     """ ------------- Update this function ------------- """
-    return 1
+    print(price_a, price_b)
+    return price_a / price_b
 
 
 # Main
@@ -52,8 +53,14 @@ if __name__ == "__main__":
         quotes = json.loads(urllib.request.urlopen(QUERY.format(random.random())).read())
 
         """ ----------- Update to get the ratio --------------- """
+        stock_prices = {}
         for quote in quotes:
-            stock, bid_price, ask_price, price = getDataPoint(quote)
-            print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price))
+            stock_details = getDataPoint(quote)
+            print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock_details[0], stock_details[1], stock_details[2], stock_details[3]))
 
-        print("Ratio %s" % getRatio(price, price))
+            stock_prices[stock_details[0]] = stock_details[3]
+
+if 'ABC' in stock_prices and 'DEF' in stock_prices:
+    print("Ratio %s" % getRatio(stock_prices['ABC'], stock_prices['DEF']))
+else:
+    print("Missing data for one of the stocks ('ABC' or 'DEF')")
